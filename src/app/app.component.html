@@ -11,10 +11,26 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
+              <ion-label>{{ p.title }}</ion-label>
             </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPageSubMenus">
+            <ion-item-group>
+              <ion-item-divider color="light" *ngIf="p.subPages?.length > 0" (click)="p.open = !p.open"
+                [class.parent-active]="p.open" detail="false">
+                <!--ion-icon slot="start" name="arrow-forward" *ngIf="!p.open"></ion-icon-->
+                <!--ion-icon slot="start" name="arrow-down" *ngIf="p.open"></ion-icon-->
+                <ion-icon slot="start" name="arrow-down"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item-divider>
+              <!--ion-list *ngIf="p.open"-->
+                <ion-item *ngFor="let p of p.subPages" [routerDirection]="'root'" [routerLink]="[p.url]">
+                  <ion-icon slot="start" [name]="p.icon"></ion-icon>
+                  <ion-label>{{ p.title }}</ion-label>
+                </ion-item>
+              <!--/ion-list-->
+            </ion-item-group>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
